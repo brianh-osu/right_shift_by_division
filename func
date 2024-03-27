@@ -1,0 +1,44 @@
+/* 
+1. divide by 2^y
+2. convert to string, if '.' exists, then there is decimal. Need to handle rounding
+3a. handle if there is a decimal
+if x is negative, >=-0.5 rounds down 
+3b. If no decimal, return part before ','
+*/
+
+function shiftToRight(x,y) {
+	let result = 0; 
+  let res_num = x/(2**y)
+  let res_str = res_num.toString()
+  // check and handle decimal
+  if (res_str.indexOf('.') == -1) {
+  	result = Number(res_str)
+  	return result
+    
+  } else {
+      let idx = res_str.indexOf('.')
+      let whole_num_str = res_str.substring(0,idx-1+1)
+      
+  	// positive case 
+  	if (res_num > 0 ) { 
+      result = Number(whole_num_str)
+      return result
+      
+   // negative case 
+   	} else {
+    	if (res_str[idx+1] >= 5) {
+       result = Number(whole_num_str) - 1
+      } else {
+       result = Number(whole_num_str)
+      }
+      return result 
+    }
+  } 
+}
+
+console.log(shiftToRight(80,3))
+console.log(shiftToRight(-24,2))
+console.log(shiftToRight(-5,1))
+console.log(shiftToRight(4666,6))
+console.log(shiftToRight(3777,6))
+console.log(shiftToRight(-512,10))
